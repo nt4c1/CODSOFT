@@ -1,0 +1,132 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,200;6..12,300;6..12,400;6..12,500;6..12,600;6..12,700;6..12,800;6..12,900;6..12,1000&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+/* Modified Cell Class */
+.cell {
+  display: inline-block;
+  width: 45%;
+  text-align: left;
+  margin: 10px;
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  transition: transform 0.3s;
+}
+
+.cell:hover {
+  transform: translateY(-10px);
+}
+
+/* New Circle Style */
+.circle {
+  display: inline-block;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #ff6b6b, #ffd56b);
+  box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.5s;
+}
+
+.circle:hover {
+  transform: scale(1.1) rotate(15deg);
+}
+
+/* New Animation for Rotate */
+.rotate-bounce {
+  animation: rotate-bounce 1.5s ease-in-out infinite;
+}
+
+@keyframes rotate-bounce {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(360deg);
+    opacity: 0.8;
+  }
+}
+
+/* Form Container with New Style */
+.form-container {
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 10px 20px;
+  border-radius: 12px;
+  background: #f0f0f0;
+  padding: 20px;
+}
+
+/* Custom Scrollbar Styles with Changes */
+/* Track */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: #6c757d;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #343a40;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #e9ecef;
+}
+
+/* New Dot Animation */
+.dots-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 100%;
+  width: 100%;
+}
+
+.dot {
+  height: 14px;
+  width: 14px;
+  margin-right: 8px;
+  border-radius: 50%;
+  background-color: #6f42c1;
+  animation: bounce 1s infinite alternate;
+}
+
+.dot:last-child {
+  margin-right: 0;
+}
+
+.dot:nth-child(1) {
+  animation-delay: -0.2s;
+}
+
+.dot:nth-child(2) {
+  animation-delay: -0.1s;
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0s;
+}
+
+/* Bounce Animation for Dots */
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-20px);
+  }
+}

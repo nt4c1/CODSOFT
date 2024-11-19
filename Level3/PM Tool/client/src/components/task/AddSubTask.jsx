@@ -1,0 +1,101 @@
+import { useForm } from "react-hook-form";
+import ModalWrapper from "../ModalWrapper";
+import { Dialog } from "@headlessui/react";
+import Textbox from "../Textbox";
+import Button from "../Button";
+import { toast } from "react-toastify"; // Make sure to install this package
+
+const AddSubTask = ({ open, setOpen, id }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm();
+
+  // Uncomment this when the mutation is available
+  // const [addSbTask] = useCreateSubTaskMutation();
+
+  const handleOnSubmit = async (data) => {
+    // Example of using toast for feedback
+    try {
+      // const res = await addSbTask({ data, id }).unwrap();
+      // toast.success(res.message); // On success
+      setOpen(false); // Close the modal after success
+    } catch (err) {
+      console.error(err);
+      toast.error(err?.data?.message || err.error); // Show error message
+    }
+  };
+
+  return (
+    <ModalWrapper open={open} setOpen={setOpen}>
+      <form onSubmit={handleSubmit(handleOnSubmit)}>
+        <Dialog.Title
+          as='h2'
+          className='text-base font-bold leading-6 text-gray-900 mb-4'
+        >
+          ADD SUB-TASK
+        </Dialog.Title>
+        <div className='mt-2 flex flex-col gap-6'>
+          <Textbox
+            placeholder='Sub-Task title'
+            type='text'
+            name='title'
+            label='Title'
+            className='w-full rounded'
+            register={register("title", {
+              required: "Title is required!",
+              minLength: { value: 3, message: "Minimum length is 3" },
+            })}
+            error={errors.title ? errors.title.message : ""}
+          />
+
+          <div className='flex items-center gap-4'>
+            <Textbox
+              placeholder='Date'
+              type='date'
+              name='date'
+              label='Task Date'
+              className='w-full rounded'
+              register={register("date", {
+                required: "Date is required!",
+                validate: (value) => {
+                  return new Date(value) >= new Date() || "Please select a future date.";
+                },
+              })}
+              error={errors.date ? errors.date.message : ""}
+            />
+            <Textbox
+              placeholder='Tag'
+              type='text'
+              name='tag'
+              label='Tag'
+              className='w-full rounded'
+              register={register("tag", {
+                required: "Tag is required!",
+              })}
+              error={errors.tag ? errors.tag.message : ""}
+            />
+          </div>
+        </div>
+        <div className='py-3 mt-4 flex sm:flex-row-reverse gap-4'>
+          <Button
+            type='submit'
+            className='bg-blue-600 text-sm font-semibold text-white hover:bg-blue-700 sm:ml-3 sm:w-auto'
+            label={isSubmitting ? 'Adding...' : 'Add Task'} // Update label based on submission state
+            disabled={isSubmitting} // Disable button while submitting
+          />
+
+          <Button
+            type='button'
+            className='bg-white border text-sm font-semibold text-gray-900 sm:w-auto'
+            onClick={() => setOpen(false)}
+            label='Cancel'
+          />
+        </div>
+      </form>
+    </ModalWrapper>
+  );
+};
+
+export default AddSubTask;
